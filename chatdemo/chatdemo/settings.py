@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-
+VAR_DIR = os.path.join(BASE_DIR, 'var')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
@@ -60,7 +60,7 @@ WSGI_APPLICATION = 'chatdemo.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(VAR_DIR, 'db.sqlite3'),
     }
 }
 
@@ -82,3 +82,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(VAR_DIR, 'static')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
+
+TEMPLATE_DIRS = [
+    os.path.join(BASE_DIR, 'templates'),
+]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(VAR_DIR, 'media')
