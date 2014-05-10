@@ -50,9 +50,11 @@ def send(request):
 
     # update chat log
     with open(chat_entry, 'a') as e:
+        entry += "\n"
         e.write(entry.encode('utf-8'))
 
     with open(chat_meta, 'a') as m:
+        meta += "\n"
         m.write(meta)
 
     return HttpResponse(entry)
