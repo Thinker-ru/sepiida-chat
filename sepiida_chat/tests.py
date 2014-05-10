@@ -1,3 +1,9 @@
 from django.test import TestCase
 
-# Create your tests here.
+from .models import Session
+
+
+class SessionTestCase(TestCase):
+    def test_e2e_basic(self):
+        _ = self.client.get('/chat/widget.js')
+        _ = self.client.post('/chat/send/', {'text': 'Test post. Please ignore.'})
