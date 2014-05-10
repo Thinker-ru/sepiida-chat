@@ -61,7 +61,12 @@ jQuery(function(){
 
         input.val('')
         jQuery
-            .post("{% url 'chat:send' %}", {'text': text})
+            .post("{% url 'chat:send' %}",
+                { 'text': text
+                , 'title': document.title
+                , 'path': document.location.pathname
+                }
+            )
             .done(function(data){
                 var entry = jQuery('<div></div>')
                 entry.html(data)

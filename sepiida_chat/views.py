@@ -18,6 +18,9 @@ def send(request):
     if not text:
         raise ValueError('No text.')
 
+    page_title = request.POST.get('title', '').strip()
+    page_path = request.POST.get('path', '').strip()
+
     cid = request.session.get('CHAT_ID')
     print cid
     if not cid:
@@ -40,6 +43,9 @@ def send(request):
     meta = json.dumps({
         'text': text,
         'timestamp': ts,
+        'path': page_path,
+        'title': page_title,
+        'ip': request.META.get('REMOTE_ADDR')
     })
 
     # update chat log
