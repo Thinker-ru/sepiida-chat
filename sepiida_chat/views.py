@@ -6,9 +6,10 @@ from django.views.decorators.csrf import csrf_exempt
 import os.path
 import json
 from datetime import datetime
+from uuid import uuid4
 
 @csrf_exempt
-def index(request):
+def send(request):
     # check request
     if request.method != 'POST':
         return HttpResponse('boo')
@@ -49,3 +50,10 @@ def index(request):
         m.write(meta)
 
     return HttpResponse(entry)
+
+def js(request):
+    cid = request.session.get('CHAT_ID')
+    if not cid:
+        cid = request.session['CHAT_ID'] = uuid4().hex
+    return render(request, 'sepiida_chat/widget.js', {'CHAT_ID': cid})
+

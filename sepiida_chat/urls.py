@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, include, url
 
 urlpatterns = patterns('sepiida_chat.views',
-    url('^$', 'index', name='index'),
+    url('^send/$',      'send', name='send'),
+    url('^widget\.js$', 'js',   name='js'),
 )
