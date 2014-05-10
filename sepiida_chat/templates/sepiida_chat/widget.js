@@ -33,6 +33,14 @@ jQuery(function(){
         var l = log[0]
         if (!!force || (log.scrollTop() + log.height() >= l.scrollHeight)) {
             l.scrollTop = l.scrollHeight
+        } else {
+            console.debug( 'not scrolling'
+                         , log.scrollTop() + log.height() >= l.scrollHeight
+                         , log.scrollTop()
+                         , log.height()
+                         , log.scrollTop() + log.height()
+                         , l.scrollHeight
+                         )
         }
     }
 
@@ -65,6 +73,9 @@ jQuery(function(){
                 { 'text': text
                 , 'title': document.title
                 , 'path': document.location.pathname
+                {% if user.is_staff %}
+                , 'cid': '{{ CHAT_ID|escapejs }}'
+                {% endif %}
                 }
             )
             .done(function(data){
@@ -98,7 +109,7 @@ jQuery(function(){
                     scrollLog("force")
                     firstPull = false
                 }
-                setTimeout(pull, 2000)
+                setTimeout(pull, 1000)
             })
     }
     pull()

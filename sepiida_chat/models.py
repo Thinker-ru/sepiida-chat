@@ -23,6 +23,12 @@ class Session(models.Model):
     replied = models.BooleanField(default=False)
     finished = models.BooleanField(default=False)
 
+    class Meta:
+        ordering = '-started',
+
+    def __unicode__(self):
+        return self.id
+
     def render(self):
         return render_to_string('sepiida_chat/session.html', {'session': self})
 
@@ -55,6 +61,9 @@ class Message(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
     text = models.TextField()
+
+    class Meta:
+        ordering = 'timestamp',
 
     def render(self):
         return render_to_string('sepiida_chat/message.html', {'message': self})

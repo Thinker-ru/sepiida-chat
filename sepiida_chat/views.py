@@ -16,7 +16,7 @@ def send(request):
     if not text:
         raise ValueError('No text.')
 
-    cid = request.session.get('CHAT_ID')
+    cid = get_cid(request)
     if not cid:
         raise ValueError('User with no CHAT_ID!')
 
@@ -25,7 +25,16 @@ def send(request):
 
 
 def js(request):
-    cid = request.session.get('CHAT_ID')
-    if not cid:
-        cid = request.session['CHAT_ID'] = Session.make_key()
+    cid = get_cid(request)
     return render(request, 'sepiida_chat/widget.js', {'CHAT_ID': cid})
+
+
+def get_cid(request):
+    if request.user.is_staff and request.REQUEST.get('cid'):
+        cid = request.REQUEST['cid']
+    else:
+        cid = request.session.get('CHAT_ID')
+        if not cid:
+            cid = request.session['CHAT_ID'] = Session.make_key()
+
+    return cid

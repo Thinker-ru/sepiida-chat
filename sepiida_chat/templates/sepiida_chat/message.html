@@ -1,4 +1,11 @@
+{% spaceless %}
 <div class="chat -message">
     <div>{{ message.timestamp }}</div>
+    <div>
+        {% if message.user.is_staff %}
+        <b>{{ message.user }}</b>
+        {% endif %}
+    </div>
     <div>{{ message.text }}</div>
 </div>
+{% endspaceless %}
