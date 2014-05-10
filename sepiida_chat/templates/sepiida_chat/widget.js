@@ -31,17 +31,8 @@ jQuery(function(){
     )
     var scrollLog = function(force){
         var l = log[0]
-        if (!!force || (log.scrollTop() + log.height() >= l.scrollHeight)) {
-            l.scrollTop = l.scrollHeight
-        } else {
-            console.debug( 'not scrolling'
-                         , log.scrollTop() + log.height() >= l.scrollHeight
-                         , log.scrollTop()
-                         , log.height()
-                         , log.scrollTop() + log.height()
-                         , l.scrollHeight
-                         )
-        }
+        l.scrollTop = l.scrollHeight
+        // FIXME: inhibit autoscroll
     }
 
     var form = jQuery('<div id="chat_form"></div>')
@@ -93,6 +84,7 @@ jQuery(function(){
     })
 
     var firstPull = true
+    var pullTimer = null // TODO: inhibit autoscroll
     var pull = function(){
         jQuery
             .get("{{ MEDIA_URL }}/sepiida_chat/{{ CHAT_ID }}.html")
@@ -109,7 +101,7 @@ jQuery(function(){
                     scrollLog("force")
                     firstPull = false
                 }
-                setTimeout(pull, 1000)
+                pullTimer = setTimeout(pull, 1000)
             })
     }
     pull()
